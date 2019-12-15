@@ -31,17 +31,22 @@ const handleDeleteRequest = async (req, res) => {
 };
 
 const handlePostRequest = async (req, res) => {
-  const { name, price, mediaUrl, description } = req.body;
+  try {
+    const { name, price, mediaUrl, description } = req.body;
 
-  if (!name || !price || !mediaUrl || !description)
-    return res.status(422).send("Product missing one or more fields");
+    if (!name || !price || !mediaUrl || !description)
+      return res.status(422).send("Product missing one or more fields");
 
-  const newProduct = await Product.create({
-    name,
-    price,
-    description,
-    mediaUrl
-  });
+    const newProduct = await Product.create({
+      name,
+      price,
+      description,
+      mediaUrl
+    });
 
-  return res.status(201).json(newProduct);
+    return res.status(201).json(newProduct);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server error in creating product")
+  }
 };

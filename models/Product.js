@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import shortid from "shortid";
 
+const { String, Number } = mongoose.Schema.Types;
+
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -13,7 +15,7 @@ const productSchema = new mongoose.Schema({
   sku: {
     type: String,
     unique: true,
-    default: shortid
+    default: shortid.generate()
   },
   description: {
     type: String,

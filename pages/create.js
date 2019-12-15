@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   Form,
@@ -13,6 +13,7 @@ import {
 
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
+import catchErrors from "../utils/catchErrors";
 
 function CreateProduct() {
   const initialProduct = {
@@ -25,6 +26,8 @@ function CreateProduct() {
   const [product, setProduct] = useState(initialProduct);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+  const [error, setError] = useState("");
 
   const [mediaReview, setMediaPreview] = useState("");
 
@@ -39,20 +42,29 @@ function CreateProduct() {
   };
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    setLoading(true);
+    try {
+      e.preventDefault();
+      setLoading(true);
 
-    const mediaUrl = await handleMediaUpload();
-    console.log({ mediaUrl });
+      const mediaUrl = await handleMediaUpload();
+      console.log({ mediaUrl });
 
-    const url = `${baseUrl}/api/product`;
-    const { name, price, description } = product;
-    const payload = { name, price, description, mediaUrl };
-    const response = await axios.post(url, payload);
-    console.log(response.data);
-    setLoading(false);
-    setProduct(initialProduct);
-    setSuccess(true);
+      const url = `${baseUrl}/api/product`;
+      const { name, price, description } = product;
+
+      const payload = { name, price, description, mediaUrl };
+
+      const response = await axios.post(url, payload);
+      console.log(response.data);
+      setLoading(false);
+      setProduct(initialProduct);
+      setSuccess(true);
+    } catch (error) {
+      catchErrors(error, setError);
+      console.error("ERROR!" + error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = e => {
@@ -66,6 +78,12 @@ function CreateProduct() {
     }
   };
 
+  useEffect(() => {
+    const isFilled = Object.values(product).every(el => Boolean(el));
+
+    isFilled ? setDisabled(false) : setDisabled(true);
+  }, [product]);
+
   const { name, price, description } = product;
 
   return (
@@ -74,7 +92,13 @@ function CreateProduct() {
         <Icon name="add" color="orange" />
         Create New Product
       </Header>
-      <Form loading={loading} success={success} onSubmit={handleSubmit}>
+      <Form
+        loading={loading}
+        error={Boolean(error)}
+        success={success}
+        onSubmit={handleSubmit}
+      >
+        <Message error header="Oops!" content={error} />
         <Message
           success
           icon="check"
@@ -125,7 +149,7 @@ function CreateProduct() {
 
         <Form.Field
           control={Button}
-          disabled={loading}
+          disabled={disabled || loading}
           color="blue"
           icon="pencil alternate"
           content="submit"

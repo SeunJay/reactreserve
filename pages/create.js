@@ -45,9 +45,9 @@ function CreateProduct() {
     try {
       e.preventDefault();
       setLoading(true);
-
+      setError("");
       const mediaUrl = await handleMediaUpload();
-      console.log({ mediaUrl });
+     
 
       const url = `${baseUrl}/api/product`;
       const { name, price, description } = product;

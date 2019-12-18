@@ -3,11 +3,11 @@ import baseURL from "../utils/baseUrl";
 import ProductSummary from "../components/Product/ProductSummary";
 import ProductAttributes from "../components/Product/ProductAttributes";
 
-function Product({ product: { product } }) {
+function Product({ product: { product }, user }) {
   return (
     <>
       <ProductSummary {...product} />
-      <ProductAttributes {...product} />
+      <ProductAttributes user={user} {...product} />
     </>
   );
 }

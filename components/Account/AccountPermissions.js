@@ -21,7 +21,6 @@ function AccountPermissions() {
     const token = cookie.get("token");
     const payload = { headers: { Authorization: token } };
     const response = await axios.get(url, payload);
-    console.log(response.data);
     setUsers(response.data);
   }
 
@@ -63,7 +62,6 @@ function UserPermission({ user }) {
       isFirstRun.current = false;
       return;
     }
-    console.log("role update: ", admin);
     updatePermission();
   }, [admin]);
 

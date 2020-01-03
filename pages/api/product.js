@@ -59,7 +59,6 @@ const handlePostRequest = async (req, res) => {
 
     return res.status(201).json(newProduct);
   } catch (error) {
-    console.log(error);
     res.status(500).send("Server error in creating product");
   }
 };

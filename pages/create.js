@@ -55,7 +55,6 @@ function CreateProduct() {
       const payload = { name, price, description, mediaUrl };
 
       const response = await axios.post(url, payload);
-      console.log(response.data);
       setLoading(false);
       setProduct(initialProduct);
       setSuccess(true);

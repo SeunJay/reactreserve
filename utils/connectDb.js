@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+//import corsProxy from "cors-anywhere"
 
 const connection = {};
 

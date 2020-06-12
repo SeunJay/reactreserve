@@ -49,7 +49,7 @@ function CreateProduct() {
       const mediaUrl = await handleMediaUpload();
      
 
-      const url = `${baseUrl}/api/product`;
+      const url = `https://cors-anywhere.herokuapp.com/${baseUrl}/api/product`;
       const { name, price, description } = product;
 
       const payload = { name, price, description, mediaUrl };

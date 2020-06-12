@@ -26,7 +26,7 @@ class MyApp extends App {
     } else {
       try {
         const payload = { headers: { Authorization: token } };
-        const url = `${baseUrl}/api/account`;
+        const url = `https://cors-anywhere.herokuapp.com/${baseUrl}/api/account`;
         const response = await axios.get(url, payload);
 
         const user = response.data;

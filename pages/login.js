@@ -35,7 +35,7 @@ function Login() {
     try {
       setLoading(true);
       setError("");
-      const url = `${baseUrl}/api/login`;
+      const url = `https://cors-anywhere.herokuapp.com/${baseUrl}/api/login`;
       const payload = { ...user };
       const response = await axios.post(url, payload);
       handleLogin(response.data);

@@ -13,7 +13,7 @@ function Product({ product: { product }, user }) {
 }
 
 Product.getInitialProps = async ({ query: { _id } }) => {
-  const url = `${baseURL}/api/product`;
+  const url = `https://cors-anywhere.herokuapp.com/${baseURL}/api/product`;
   const payload = { params: { _id } };
   const response = await axios.get(url, payload);
   return { product: response.data };

@@ -29,7 +29,7 @@ function Cart({ products, user }) {
   async function handleCheckout(paymentData) {
     try {
       setloading(true);
-      const url = `${baseUrl}/api/checkout`;
+      const url = `https://cors-anywhere.herokuapp.com/${baseUrl}/api/checkout`;
       const token = cookie.get("token");
       const payload = { paymentData };
       const headers = { headers: { Authorization: token } };

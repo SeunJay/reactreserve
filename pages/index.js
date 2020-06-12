@@ -16,7 +16,7 @@ function Home({ products, totalPages }) {
 Home.getInitialProps = async function(ctx) {
   const page = ctx.query.page ? ctx.query.page : "1";
   const size = 9;
-  const url = `${baseURL}/api/products`;
+  const url = `https://cors-anywhere.herokuapp.com/${baseURL}/api/products`;
   const payload = { params: { page, size } };
   const response = await axios.get(url, payload);
   return response.data;
